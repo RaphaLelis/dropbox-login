@@ -2,13 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Container } from './styles';
 const scrollThreshold = 300;
 
+declare global{
+	interface Window {
+		toggleActiveMenu: (()=> void) | undefined;
+	}
+}
+
 interface Props {
 	children: React.ReactNode;
 }
 
 const SideMenu: React.FC<Props> = ({ children }) => {
 	const [scrollY, setScrollY] = useState(0);
-	const [isActive, setIsActive] = useState(true); 
+	const [isActive, setIsActive] = useState(false); 
 
 	useEffect(() => {
 		function onScroll(){
@@ -25,6 +31,12 @@ const SideMenu: React.FC<Props> = ({ children }) => {
 		scrollY < scrollThreshold ? 'scrollOpen' : '',
 	];
 	const className = classes.join(' ').trim();
+
+	function toggleActiveMenu(){
+		setIsActive(prev => !prev);
+	}
+
+	window.toggleActiveMenu = toggleActiveMenu;
 
 	return <Container className={className}>{children}</Container>;
 }
