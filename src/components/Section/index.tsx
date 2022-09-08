@@ -16,6 +16,7 @@ interface Props {
 
 const Section: React.FC<Props> = ({ variant, title, description }) => {
 	const buttonVariant = Math.round(Math.random());
+
   return (
     <Container className={variant}>
 		<HeaderWrapper>
